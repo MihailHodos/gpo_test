@@ -9,6 +9,6 @@ const connectionOpts: ConnectionOptions =
     username: process.env.DB_USERNAME || 'KUAJoGg7aM', 
     password: process.env.DB_PASSWORD || 'n1rEEjCJT5', 
     database: process.env.DB_NAME || 'KUAJoGg7aM',
-     entities: [ `${parentDir}/**/*.entity.ts`, ], synchronize: true, }; 
+     entities: [ `${parentDir}/**/*.entity.*s`, ], synchronize: true, }; 
 const connection:Promise<Connection> = createConnection(connectionOpts);
 export default connection;
