@@ -3,6 +3,7 @@ import * as HttpStatus from 'http-status-codes';
 import * as bodyParser from 'koa-bodyparser';
 import movieController from '../movie/movie.controller';
 import userController from '../user/user.controller';
+const cors = require('@koa/cors');
  const app:Koa = new Koa(); 
  app.use(bodyParser());
 app.use(async (ctx: Koa.Context, next: () => Promise<any>) => { 
@@ -12,7 +13,7 @@ app.use(async (ctx: Koa.Context, next: () => Promise<any>) => {
         ctx.body = { error };
         ctx.app.emit('error11', error, ctx);
 } }); 
-
+app.use(cors());
 app.use(movieController.routes());
 app.use(movieController.allowedMethods());
 
