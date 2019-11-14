@@ -12,6 +12,34 @@ export default class User {
     @Column()
     password: string;
 
+
+    @Column()
+    phone: string;
+
+    @Column()
+    firstName: string;
+
+    @Column()
+    middleName: string;
+
+    @Column()
+    lastName: string;
+
+    @Column()
+    organizationName: string;
+
+    @Column()
+    organizationAddress: string;
+
+    @Column()
+    organizationPhone: string;
+
+    @Column()
+    specialty: string;
+
+
+
+
     @Column({
         default: false
     })

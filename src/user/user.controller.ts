@@ -4,11 +4,11 @@ const nodemailer = require('nodemailer');
 import * as Router from 'koa-router'; 
 import * as HttpStatus from 'http-status-codes'; 
 import userEntity from './user.entity';
+var jwt = require('jsonwebtoken');
 const routerOpts: Router.IRouterOptions = { prefix: '/user', };
 const router: Router = new Router(routerOpts); 
 router.get('/', async (ctx:Koa.Context) => {
-      
-       
+  ctx.body = 'server is running';
 });
 router.get('/verify/:email', async (ctx:Koa.Context) => {
 
@@ -22,12 +22,29 @@ router.get('/verify/:email', async (ctx:Koa.Context) => {
     ctx.body = "<p style='color:green;'>Ваш аккаунт подтвержден</p>";
     });
 
-router.get('/:user_id', async (ctx:Koa.Context) => {
+        router.get('/:user_id', async (ctx:Koa.Context) => {
    
     });
 
+//auth
+router.post('/auth', async (ctx:Koa.Context) => {
+  let res = null;
+  const userRepo:Repository<userEntity> = getRepository(userEntity); 
+  
+  const user:userEntity = ctx.request.body;
+  if(user){
+    res = await userRepo.findOne({email: user.email, password: user.password});
+  }
+  if(res){
+    var token = jwt.sign({id: user.id}, 'shhhhh');
+    ctx.status = 200;
+    ctx.body = { data: { token},success: true };
+  }else {
+    ctx.body = {success: false};
+  }
 
-   
+
+});
 //Регистрация
 router.post('/', async (ctx:Koa.Context) => {
      
@@ -66,7 +83,6 @@ router.post('/', async (ctx:Koa.Context) => {
   
     smtpTransport.sendMail(mailOptions, (error: any, info: any) => {
       if (error) {
-        // return console.log(error);
         return console.log(error);
       } else {
         console.log('Message sent: %s', info.messageId);
@@ -75,8 +91,9 @@ router.post('/', async (ctx:Koa.Context) => {
       ctx.body = 'почта отправлена';
  
  });
-    ctx.status = HttpStatus.CREATED; 
-    ctx.body = { data: { user}, };
+    var token = jwt.sign(user, 'shhhhh');
+    ctx.status = HttpStatus.CREATED;
+    ctx.body = { data: { token}, };
 }); 
 router.delete('/:user_id', async (ctx:Koa.Context) => { ctx.body = ctx.request.host; }); 
 router.patch('/:user_id', async (ctx:Koa.Context) => { ctx.body = 'PATCH'; }); 
