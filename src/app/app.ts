@@ -3,7 +3,11 @@ import * as HttpStatus from 'http-status-codes';
 import * as bodyParser from 'koa-bodyparser';
 import movieController from '../movie/movie.controller';
 import userController from '../user/user.controller';
+
  const app:Koa = new Koa(); 
+ const cors = require('@koa/cors');
+ app.use(cors());
+
  app.use(bodyParser());
 app.use(async (ctx: Koa.Context, next: () => Promise<any>) => { 
     try { await next(); } 
