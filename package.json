@@ -24,7 +24,7 @@
     "nodemailer": "^6.3.1",
     "pg": "^7.12.1",
     "reflect-metadata": "^0.1.13",
-    "typeorm": "^0.2.20"
+    "typeorm": "^0.2.25"
   },
   "devDependencies": {
     "@types/http-status-codes": "^1.2.0",
